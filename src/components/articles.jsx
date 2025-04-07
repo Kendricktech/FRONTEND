@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 const ArticleCard = ({ title, description }) => (
-  <div className="p-4 rounded-lg shadow-md w-64 flex-shrink-0 border border-white/10">
-    <h3 className="text-lg font-semibold mt-3">{title}</h3>
-    <p className="text-gray-300 text-sm mt-2 line-clamp-3">
+  <div className="bg-black/50 backdrop-blur-sm p-4 rounded-lg shadow-md w-64 flex-shrink-0 transition transform hover:-translate-y-1 hover:shadow-lg">
+    <h3 className="text-lg font-semibold mt-3 text-white">{title}</h3>
+    <p className="text-white text-sm mt-2 line-clamp-3">
       {description || title.substring(0, 100) + '...'}
     </p>
   </div>
 );
+
 
 const FeaturedArticles = () => {
   const [articles, setArticles] = useState([]);
