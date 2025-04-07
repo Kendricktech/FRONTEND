@@ -2,7 +2,7 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <div className="px-6 py-16 text-center md:text-left max-w-4xl mx-auto my-auto">
+    <div className="px-6 py-16 text-center  backdrop-blur-md md:text-left max-w-4xl mx-auto my-auto">
       <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-white">
       Recover Your Lost Money with Confidence
       </h1>
