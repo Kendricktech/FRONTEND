@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 const ArticleCard = ({ title, description }) => (
-  <div className="bg-gray-900 p-4 rounded-lg shadow-md w-64 flex-shrink-0">
+  <div className="p-4 rounded-lg shadow-md w-64 flex-shrink-0 border border-white/10">
     <h3 className="text-lg font-semibold mt-3">{title}</h3>
     <p className="text-gray-300 text-sm mt-2 line-clamp-3">
       {description || title.substring(0, 100) + '...'}
@@ -21,21 +21,15 @@ const FeaturedArticles = () => {
       try {
         setIsLoading(true);
         const response = await fetch('/article.xml');
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const xmlText = await response.text();
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xmlText, "text/xml");
-        
         const extractedArticles = Array.from(xmlDoc.getElementsByTagName("article")).map(article => ({
           id: article.getAttribute('id'),
           title: article.querySelector("title")?.textContent || "Untitled Article",
           description: article.querySelector("body")?.textContent.substring(0, 250) + "..."
         }));
-
         setArticles(extractedArticles);
         setIsLoading(false);
       } catch (e) {
@@ -44,20 +38,19 @@ const FeaturedArticles = () => {
         setIsLoading(false);
       }
     };
-
     fetchArticles();
   }, []);
 
   const scroll = (direction) => {
     if (scrollRef.current) {
-      const { scrollLeft, clientWidth } = scrollRef.current;
+      const { clientWidth } = scrollRef.current;
       scrollRef.current.scrollBy({ left: direction === "left" ? -clientWidth : clientWidth, behavior: "smooth" });
     }
   };
 
   if (isLoading) {
     return (
-      <div className="relative p-6 bg-gray-800 rounded-lg shadow-lg w-full max-w-6xl mx-auto">
+      <div className="relative p-6 w-full max-w-6xl mx-auto">
         <p className="text-gray-400 text-center py-4">Loading articles...</p>
       </div>
     );
@@ -65,14 +58,14 @@ const FeaturedArticles = () => {
 
   if (error) {
     return (
-      <div className="relative p-6 bg-gray-800 rounded-lg shadow-lg w-full max-w-6xl mx-auto">
+      <div className="relative p-6 w-full max-w-6xl mx-auto">
         <p className="text-red-400 text-center py-4">Error loading articles: {error}</p>
       </div>
     );
   }
 
   return (
-    <div className="relative p-6 bg-gray-800 rounded-lg shadow-lg w-full max-w-6xl mx-auto">
+    <div className="relative p-6 w-full max-w-6xl mx-auto">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold text-white">Asset Recovery Articles</h2>
         <a href="/articles" className="text-blue-400 hover:underline text-sm">See all articles →</a>
@@ -82,7 +75,7 @@ const FeaturedArticles = () => {
         {articles.length > 0 ? (
           <>
             <button
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-700 p-2 rounded-full shadow-md hover:bg-gray-600 z-10"
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 p-2 rounded-full shadow-md hover:bg-white/10 z-10"
               onClick={() => scroll("left")}
             >
               <ArrowLeft size={20} className="text-white" />
@@ -99,7 +92,7 @@ const FeaturedArticles = () => {
             </div>
 
             <button
-              className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-700 p-2 rounded-full shadow-md hover:bg-gray-600 z-10"
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 p-2 rounded-full shadow-md hover:bg-white/10 z-10"
               onClick={() => scroll("right")}
             >
               <ArrowRight size={20} className="text-white" />
