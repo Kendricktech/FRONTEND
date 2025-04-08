@@ -2,29 +2,30 @@ import React, { useState, useEffect } from "react";
 import Navbar from "@components/navbar";
 import Footer from "@components/footer";
 import { X } from "lucide-react";
+import  {ArticleModal} from "@components/articles";
 
-const ArticleModal = ({ article, onClose }) => {
-  if (!article) return null;
+// const ArticleModal = ({ article, onClose }) => {
+//   if (!article) return null;
 
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-gray-900 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-white hover:text-gray-300"
-        >
-          <X size={24} />
-        </button>
-        <div className="p-8">
-          <h2 className="text-2xl font-bold text-white mb-6">{article.title}</h2>
-          <div className="prose prose-invert text-gray-300 whitespace-pre-wrap">
-            {article.body}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+//   return (
+//     <div className="fixed inset-0 bg-black backdrop-blur-md bg-opacity-50 z-50 flex items-center justify-center p-4 overflow-y-auto">
+//       <div className=" rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
+//         <button
+//           onClick={onClose}
+//           className="absolute top-4 right-4 text-white hover:text-black"
+//         >
+//           <X size={24} />
+//         </button>
+//         <div className="p-8">
+//           <h2 className="text-2xl font-bold text-white mb-6">{article.title}</h2>
+//           <div className="prose prose-invert text-gray-300 whitespace-pre-wrap">
+//             {article.body}
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
 const ArticlesPage = () => {
   const [articles, setArticles] = useState([]);
@@ -130,7 +131,7 @@ const ArticlesPage = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+      <div className="min-h-screen text-white flex items-center justify-center">
         <p>Error: {error}</p>
       </div>
     );
@@ -139,7 +140,7 @@ const ArticlesPage = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-900 text-white p-8">
+      <div className="min-h-screen  text-white p-8">
         <div className="container mx-auto">
           <h1 className="text-3xl font-bold mb-8 text-center">Asset Recovery Articles</h1>
 

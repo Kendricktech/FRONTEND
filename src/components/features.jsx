@@ -28,11 +28,11 @@ const Features = () => {
 
   return (
     <div className="flex justify-center mt-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 bg-black/50 backdrop-blur-md rounded-lg shadow-lg max-w-xl text-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6   rounded-lg shadow-lg max-w-xl text-center">
         {features.map((feature, index) => (
           <div 
             key={index} 
-            className={`bg-gray-900/800 p-6 border border-white rounded-lg shadow-md transition ${
+            className={`backdrop-blur-md p-6 border border-white rounded-lg shadow-md transition ${
               feature.onClick ? "cursor-pointer hover:bg-gray-700" : ""
             }`}
             onClick={feature.onClick} // Handles click event if defined

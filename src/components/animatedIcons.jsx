@@ -1,26 +1,34 @@
 import React from "react";
+import img_1 from "../assets/img_1.jpeg";
 
-const AnimatedIcons = () => {
+import img_6 from "../assets/img_6.jpeg";
+import img_7 from "../assets/img_7.jpeg";
+
+function Component({ image, text }) {
   return (
-    <div className="flex justify-center mt-16">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-        {[0, 1, 2].map((index) => (
-          <div key={index} className={`relative animate-float ${index === 1 ? "delay-1" : index === 2 ? "delay-2" : ""}`}>
-            <div className="w-24 h-24 bg-transparent justify-center">
-              <dotlottie-player
-                src="https://lottie.host/865e402a-fc9c-4f0d-84a1-e5cef1f133a9/JnvmEVsavR.lottie"
-                background="transparent"
-                speed="1"
-                style={{ width: "80px", height: "80px" }}
-                loop
-                autoPlay
-              ></dotlottie-player>
-            </div>
-          </div>
-        ))}
-      </div>
+    <div className="flex flex-col items-center justify-center w-full h-full p-4 bg-black/20  rounded-lg shadow-lg">
+      <img src={image} alt="Animated Icon" className="w-16 h-16 mb-2" />
+      <p className="text-white text-center">{text}</p>
     </div>
   );
-};
+}
+
+function AnimatedIcons() {
+  const icons = [
+    { image: img_6, text: "PCA Regulated" }, 
+    { image: img_7, text: "#7 On Recovered" },
+    { image: img_1, text: "4,000+ Customers" },
+    
+   
+  ];
+
+  return (
+    <div className="flex  justify-center items-center gap-4 p-4">
+      {icons.map((icon, index) => (
+        <Component key={index} {...icon} />
+      ))}
+    </div>
+  );
+}
 
 export default AnimatedIcons;
