@@ -15,7 +15,7 @@ function Home() {
       <Hero />
       <AnimatedIcons />
       <Features />
-      <FeaturedArticles/>
+      {/* <FeaturedArticles/> */}
       <Footer />
     </>
   );

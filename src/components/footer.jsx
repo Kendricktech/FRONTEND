@@ -1,89 +1,79 @@
-import React, { useState } from "react";
-import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
+import React from 'react';
 
 const Footer = () => {
-  const [isContactOpen, setIsContactOpen] = useState(false);
-
   return (
-    <footer className="bg-black/50 backdrop-blur-md text-white p-6 mt-10">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
-        {/* Brand & Copyright */}
-        <div className="text-center md:text-left mb-4 md:mb-0">
-          <h2 className="text-lg font-bold">Recovery Guard</h2>
-          <p className="text-sm text-gray-300">
-            © {new Date().getFullYear()}, All rights reserved.
-          </p>
+    <footer className="bg-white/5 text-white border-t border-white/10 backdrop-blur-md mt-16">
+      <div className="max-w-6xl mx-auto px-4 py-12 space-y-12">
+
+        {/* Top Notice */}
+        <div className="text-center py-3 border-b border-white/10 text-sm text-gray-300">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </div>
 
-        {/* Social Media Links */}
-        <div className="flex space-x-4 mb-4 md:mb-0">
-          <a href="#" className="text-gray-300 hover:text-blue-500">
-            <Facebook size={24} />
-          </a>
-          <a href="#" className="text-gray-300 hover:text-blue-400">
-            <Twitter size={24} />
-          </a>
-          <a href="#" className="text-gray-300 hover:text-blue-600">
-            <Linkedin size={24} />
-          </a>
-          <a href="#" className="text-gray-300 hover:text-pink-500">
-            <Instagram size={24} />
-          </a>
-        </div>
+        {/* Footer Columns */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 text-sm">
+          {/* Recovery Guard */}
+          <div>
+            <h3 className="text-lg font-bold mb-4">Recovery Guard</h3>
+            <ul className="space-y-2 text-gray-300">
+              <li><a href="#" className="hover:text-white transition">Lorem ipsum</a></li>
+              <li><a href="#" className="hover:text-white transition">Lorem ipsum</a></li>
+              <li><a href="#" className="hover:text-white transition">Lorem ipsum</a></li>
+              <li><a href="#" className="hover:text-white transition">Lorem ipsum</a></li>
+              <li className="mt-2"><a href="#" className="hover:text-white transition">Lorem ipsum</a></li>
+            </ul>
+          </div>
 
-        {/* Contact Us Button */}
-        <button
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-          onClick={() => setIsContactOpen(!isContactOpen)}
-        >
-          Contact Us
-        </button>
-      </div>
+          {/* Banks */}
+          <div>
+            <h3 className="text-lg font-bold mb-4">Banks</h3>
+            <ul className="space-y-2 text-gray-300">
+              <li><a href="#" className="hover:text-white transition">Lorem ipsum</a></li>
+              <li><a href="#" className="hover:text-white transition">Lorem ipsum</a></li>
+              <li><a href="#" className="hover:text-white transition">Lorem ipsum</a></li>
+              <li><a href="#" className="hover:text-white transition">Lorem ipsum</a></li>
+            </ul>
+          </div>
 
-      {/* Contact Form Modal */}
-      {isContactOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center p-4 z-50">
-          <div className="bg-gray-900/90 p-6 rounded-lg shadow-lg w-full max-w-md text-white">
-            <h3 className="text-lg font-semibold mb-4 text-center">Contact Us</h3>
-            <form>
-              <label className="block text-sm">Name</label>
-              <input
-                type="text"
-                className="w-full p-2 rounded bg-gray-800 text-white mb-3"
-                required
-              />
+          {/* Support */}
+          <div>
+            <h3 className="text-lg font-bold mb-4">Support</h3>
+            <ul className="space-y-2 text-gray-300">
+              <li><a href="#" className="hover:text-white transition">Lorem ipsum</a></li>
+              <li><a href="#" className="hover:text-white transition">Lorem ipsum</a></li>
+              <li><a href="#" className="hover:text-white transition">Lorem ipsum</a></li>
+              <li><a href="#" className="hover:text-white transition">Lorem ipsum</a></li>
+            </ul>
+          </div>
 
-              <label className="block text-sm">Email</label>
-              <input
-                type="email"
-                className="w-full p-2 rounded bg-gray-800 text-white mb-3"
-                required
-              />
-
-              <label className="block text-sm">Message</label>
-              <textarea
-                rows="4"
-                className="w-full p-2 rounded bg-gray-800 text-white mb-3"
-                required
-              ></textarea>
-
-              <button
-                type="submit"
-                className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-              >
-                Send Message
-              </button>
-            </form>
-
-            <button
-              className="mt-4 w-full py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
-              onClick={() => setIsContactOpen(false)}
-            >
-              Close
-            </button>
+          {/* Contact */}
+          <div>
+            <h3 className="text-lg font-bold mb-4">Talk to us</h3>
+            <ul className="space-y-2 text-gray-300">
+              <li><a href="#" className="hover:text-white transition">Lorem ipsum</a></li>
+              <li><a href="#" className="hover:text-white transition">Lorem ipsum</a></li>
+              <li>
+                <a href="mailto:dummyemail@example.com" className="hover:text-white transition">
+                  dummyemail@example.com
+                </a>
+              </li>
+              <li>
+                <a href="tel:+1234567890" className="hover:text-white transition">
+                  +1 (234) 567-890
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
-      )}
+
+        {/* Regulatory Info */}
+        <div className="text-xs text-gray-400 border-t border-white/10 pt-6">
+          <p className="leading-relaxed">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel urna ut leo ullamcorper pretium non ac nulla. 
+            Vivamus tincidunt tortor felis, sed consequat urna placerat id. Curabitur facilisis tincidunt enim vel porttitor.
+          </p>
+        </div>
+      </div>
     </footer>
   );
 };

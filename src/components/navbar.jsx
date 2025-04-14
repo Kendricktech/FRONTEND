@@ -10,6 +10,9 @@ const Navbar = () => {
     { label: "Home", path: "/" },
     { label: "About", path: "/about" },
     { label: "Contact", path: "/contact" },
+    { label: "Articles", path: "/articles" },
+   
+    { label: "FAQ", path: "/faq" },
   ];
 
   const handleNavigate = (path) => {
@@ -18,7 +21,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-transparent backdrop-blur-md text-white p-4 flex justify-between items-center border-white border-2 shadow-md relative z-50">
+    <nav className="bg-transparent backdrop-blur-md text-white p-4 flex justify-between items-center border-black bg-black/70 border-2 shadow-md relative z-50">
       {/* Logo */}
       <div className="flex flex-row-reverse items-center justify-between ">
   <h1
