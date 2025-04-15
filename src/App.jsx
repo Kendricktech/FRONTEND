@@ -6,9 +6,10 @@ import CryptoLossReport from "@pages/CryptoCurrencyRecovery";
 import ArticlesPage from "./pages/articles";
 import RecoveryOptions from "./pages/RecoveryOptions"; // ✅ import new component
 import ContactSection from "./pages/contact";
-import AboutSection from  "./pages/about";
+import AboutSection from "./pages/about";
 import FAQSection from "./pages/faq";
-
+import NotFound from "./pages/NotFound"; // Import the new NotFound component
+import Dashboard from "./pages/dashboard";
 function App() {
   return (
     <Routes>
@@ -21,8 +22,9 @@ function App() {
       <Route path="/contact" element={<ContactSection />} />
       <Route path="/about" element={<AboutSection />} />
       <Route path="/faq" element={<FAQSection />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       {/* Add more routes as needed */}
-      <Route path="*" element={<h1>404 Not Found</h1>} />
+      <Route path="*" element={<NotFound />} /> {/* Use NotFound for 404 */}
     </Routes>
   );
 }
