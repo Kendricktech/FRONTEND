@@ -1,0 +1,18 @@
+{
+    "stats": [
+      { "label": "Cases Submitted", "value": 12 },
+      { "label": "Ongoing Cases", "value": 5 },
+      { "label": "Funds Recovered", "value": "$23,500" },
+      { "label": "Last Update", "value": "Apr 14, 2025" }
+    ],
+    "progress": {
+      "steps": ["Submitted", "Being Reviewed", "In Progress", "Resolved"],
+      "currentStepIndex": 2
+    },
+    "activity": [
+      { "icon": "📄", "message": "Document received -", "detail": "ID.pdf", "time": "2 hrs ago" },
+      { "icon": "💬", "message": "Message from Recovery Agent", "time": "1 day ago" },
+      { "icon": "🆕", "message": "New Case Submitted", "time": "2 days ago" }
+    ]
+  }
+  
