@@ -15,6 +15,8 @@ const Navbar = () => {
     { label: "My Cases", path: "/my-cases" },        // Updated link for "My Cases"
     { label: "Support", path: "/support" },          // Updated link for "Support"
     { label: "FAQ", path: "/faq" }, 
+    {label:"Login",path:"/login"},
+    {label:"SignUp",path:"/signup"}, // Updated link for "Login"
                      // Updated link for "FAQ"
   ];
 

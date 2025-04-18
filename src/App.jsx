@@ -10,6 +10,8 @@ import AboutSection from "./pages/about";
 import FAQSection from "./pages/faq";
 import NotFound from "./pages/NotFound"; // Import the new NotFound component
 import Dashboard from "./pages/dashboard";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 function App() {
   return (
     <Routes>
@@ -23,6 +25,8 @@ function App() {
       <Route path="/about" element={<AboutSection />} />
       <Route path="/faq" element={<FAQSection />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
       {/* Add more routes as needed */}
       <Route path="*" element={<NotFound />} /> {/* Use NotFound for 404 */}
     </Routes>

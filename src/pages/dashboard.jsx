@@ -1,20 +1,35 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // for redirection
 import Sidebar from "../components/SideBar";
 import { Bell, UserCircle } from "lucide-react";
+import Navbar from "../components/navbar";
+import Footer from "../components/footer";
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    // ✅ Check for JWT token
+    const token = localStorage.getItem("access");
+
+    if (!token) {
+      navigate("/login"); // Redirect to login if not authenticated
+      return;
+    }
+
+    // ✅ Load dashboard data
     fetch("/data.json")
       .then((res) => res.json())
       .then(setData)
       .catch((err) => console.error("Failed to load data:", err));
-  }, []);
+  }, [navigate]);
 
   if (!data) return <div className="text-white p-10">Loading...</div>;
 
   return (
+    <>
+    <Navbar/>
     <div className="flex h-screen bg-black/30 text-white">
       <Sidebar />
       <div className="flex-1 flex flex-col">
@@ -40,7 +55,9 @@ const Dashboard = () => {
           </div>
         </header>
 
+        {/* Dashboard Content */}
         <main className="p-6 space-y-6 overflow-y-auto">
+          {/* STATS */}
           <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {data.stats.map((stat, i) => (
               <div
@@ -53,6 +70,7 @@ const Dashboard = () => {
             ))}
           </section>
 
+          {/* CASE PROGRESS */}
           <section className="bg-black/30 rounded-xl p-6 border border-white/20 shadow backdrop-blur-lg">
             <h2 className="text-xl font-semibold mb-4">Case Progress</h2>
             <div className="flex items-center justify-between text-sm font-semibold">
@@ -71,6 +89,7 @@ const Dashboard = () => {
             </div>
           </section>
 
+          {/* RECENT ACTIVITY */}
           <section className="bg-black/30 rounded-xl p-6 border border-white/20 shadow backdrop-blur-lg">
             <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
             <ul className="space-y-3 text-sm">
@@ -84,6 +103,7 @@ const Dashboard = () => {
             </ul>
           </section>
 
+          {/* UPLOAD */}
           <section className="bg-black/30 rounded-xl p-6 border border-white/20 shadow backdrop-blur-lg">
             <h2 className="text-xl font-semibold mb-4">Upload Documents</h2>
             <div className="border-2 border-dashed border-gray-500 p-10 rounded-lg text-center hover:border-blue-400 transition cursor-pointer">
@@ -94,6 +114,10 @@ const Dashboard = () => {
         </main>
       </div>
     </div>
+
+    <Footer/>
+    </>
+
   );
 };
 

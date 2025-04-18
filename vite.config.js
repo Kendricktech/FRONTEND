@@ -1,7 +1,7 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
-// https://vite.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
@@ -9,8 +9,17 @@ export default defineConfig({
       '@components': '/src/components',
       '@pages': '/src/pages',
       '@styles': '/src/styles',
-      '@images': '/public/images'
-    }
+      '@images': '/public/images',
+    },
   },
-  assetsInclude: ['**/*.gif', '**/*.GIF'] // move this OUT of resolve
-})
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
+  assetsInclude: ['**/*.gif', '**/*.GIF'],
+});
