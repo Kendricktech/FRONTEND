@@ -1,98 +1,69 @@
-const API_BASE_URL = 'http://localhost:8000/api';
+// utils/auth.js
 
-// =====================
-// Token Management
-// =====================
-function getToken(name) {
-  return localStorage.getItem(name);
-}
-
-function setToken(name, value) {
-  localStorage.setItem(name, value);
-}
-
-function removeTokens() {
-  localStorage.removeItem('access');
-  localStorage.removeItem('refresh');
-}
-
-function decodeJWT(token) {
-  try {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload;
-  } catch (e) {
+/**
+ * Make an authenticated API request with JWT token
+ * @param {string} url - The URL to fetch
+ * @param {Object} options - Fetch options
+ * @returns {Promise<Response>} - Fetch response
+ */
+export const authenticatedFetch = async (url, options = {}) => {
+  const token = localStorage.getItem('access');
+  
+  if (!token) {
+    throw new Error('No authentication token found');
+  }
+  
+  const headers = {
+    ...options.headers,
+    'Authorization': `Bearer ${token}`
+  };
+  
+  // Don't set Content-Type for FormData
+  if (!(options.body instanceof FormData)) {
+    headers['Content-Type'] = headers['Content-Type'] || 'application/json';
+  }
+  
+  const config = {
+    ...options,
+    headers
+  };
+  
+  const response = await fetch(url, config);
+  
+  // If token is expired, redirect to login
+  if (response.status === 401) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    window.location.href = '/login';
     return null;
   }
-}
-
-function isTokenExpired(token) {
-  const payload = decodeJWT(token);
-  if (!payload || !payload.exp) return true;
-  return Date.now() >= payload.exp * 1000;
-}
-
-// =====================
-// Authentication Core
-// =====================
-export function isAuthenticated() {
-  const access = getToken('access');
-  return access && !isTokenExpired(access);
-}
-
-export function logout() {
-  removeTokens();
-  window.location.href = '/login';
-}
-
-export async function refreshAccessToken() {
-  const refresh = getToken('refresh');
-  if (!refresh) throw new Error('No refresh token available');
-
-  const res = await fetch(`${API_BASE_URL}/token/refresh/`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ refresh }),
-  });
-
-  if (!res.ok) throw new Error('Token refresh failed');
-
-  const data = await res.json();
-  setToken('access', data.access);
-  return data.access;
-}
-
-export async function authenticatedFetch(url, options = {}, retry = true) {
-  let access = getToken('access');
-
-  if (!access || isTokenExpired(access)) {
-    try {
-      access = await refreshAccessToken();
-    } catch (err) {
-      logout();
-      throw err;
-    }
-  }
-
-  const authOptions = {
-    ...options,
-    headers: {
-      ...(options.headers || {}),
-      Authorization: `Bearer ${access}`,
-      'Content-Type': 'application/json',
-    },
-  };
-
-  const response = await fetch(url, authOptions);
-
-  if (response.status === 401 && retry) {
-    try {
-      const newAccess = await refreshAccessToken();
-      return authenticatedFetch(url, options, false);
-    } catch (err) {
-      logout();
-      throw err;
-    }
-  }
-
+  
   return response;
-}
+};
+
+/**
+ * Check if the user is authenticated
+ * @returns {boolean} - True if authenticated
+ */
+export const isAuthenticated = () => {
+  const token = localStorage.getItem('token');
+  return !!token;
+};
+
+/**
+ * Get the current user ID
+ * @returns {number|null} - User ID or null if not authenticated
+ */
+export const getCurrentUserId = () => {
+  const userId = localStorage.getItem('userId');
+  return userId ? parseInt(userId) : null;
+};
+
+/**
+ * Logout the current user
+ */
+export const logout = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('userId');
+  window.location.href = '/login';
+};

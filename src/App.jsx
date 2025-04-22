@@ -14,6 +14,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Notifications from "./pages/Notifications";
 import Cases from "./pages/Cases";
+import MessageList from "./pages/MessageList";
 function App() {
   return (
     <Routes>
@@ -32,6 +33,9 @@ function App() {
       <Route path="/notifications" element={<Notifications />} />
       <Route path="/cases" element={<Cases />} />
       <Route path="*" element={<NotFound />} /> {/* Use NotFound for 404 */}
+      <Route path="/messages" element={<MessageList />} /> {/* New route for messages */}
+      <Route path="support" element={<MessageList/>}/>
+      {/* Add more routes as needed */}
     </Routes>
   );
 }

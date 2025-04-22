@@ -6,7 +6,7 @@ import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import { authenticatedFetch } from "../utils/auth";
 import API_BASE_URL from "../utils/Setup";
-import { getStructure } from "../utils/debugJson";
+import NotificationBell from "../components/Notification";
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
@@ -25,21 +25,32 @@ const Dashboard = () => {
     })
       .then((res) => res.json())
       .then((resData) => {
+        console.log("Dashboard resData:", resData); // Log for structure check
+
         if (resData?.stats && resData?.progress && resData?.activity) {
-          const structure = getStructure(resData, 2);
-          console.log("Response structure:", resData, structure);
-          setData(resData);
+          
+          setData(resData); // ✅ This line was missing
         } else {
           console.error("Invalid response structure", resData);
           navigate("/login");
         }
-        
       })
       .catch((err) => {
         console.error("Failed to load data:", err);
         navigate("/login");
       });
   }, [navigate]);
+
+  // Fallback timeout: auto-redirect if it hangs
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (!data) {
+        console.warn("Dashboard timed out. Redirecting.");
+        navigate("/login");
+      }
+    }, 7000);
+    return () => clearTimeout(timeout);
+  }, [data, navigate]);
 
   if (!data) return <div className="text-white p-10">Loading...</div>;
 
@@ -62,8 +73,7 @@ const Dashboard = () => {
             </div>
             <div className="flex items-center space-x-6">
               <button className="relative hover:text-blue-400">
-                <Bell className="w-6 h-6" />
-                <span className="absolute -top-2 -right-2 bg-red-600 rounded-full h-4 w-4 text-xs flex items-center justify-center">2</span>
+                <NotificationBell className="w-8 h-8" />
               </button>
               <div className="relative">
                 <UserCircle className="w-8 h-8 hover:text-blue-400 cursor-pointer" />
