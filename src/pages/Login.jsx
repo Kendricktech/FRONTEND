@@ -4,7 +4,7 @@ import Footer from "../components/footer";
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
-  const endpoint = "/api/auth/create-customer/";
+  const endpoint = "/api/auth/login/";
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });

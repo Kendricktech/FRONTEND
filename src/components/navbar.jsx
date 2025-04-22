@@ -1,29 +1,53 @@
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import logoImage from "../assets/logo.png"; // Adjust the path as necessary
+import logoImage from "../assets/logo.png";
+import NotificationBell from "./Notification";
+import { isAuthenticated, logout } from "../utils/auth";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
-  // Updated navItems array with new links
-  const navItems = [
-    { label: "Home", path: "/" },
-    {label:"DashBoard", path:"/dashboard"}, // Updated link for "Dashboard"
-    { label: "Submit Case", path: "/submit-case" },  // Updated link for "Submit Case"
-    { label: "My Cases", path: "/my-cases" },        // Updated link for "My Cases"
-    { label: "Support", path: "/support" },          // Updated link for "Support"
-    { label: "FAQ", path: "/faq" }, 
-    {label:"Login",path:"/login"},
-    {label:"SignUp",path:"/signup"}, // Updated link for "Login"
-                     // Updated link for "FAQ"
-  ];
-
   const handleNavigate = (path) => {
     navigate(path);
-    setIsOpen(false); // Close mobile menu after navigation
+    setIsOpen(false);
   };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
+  const authNavItems = [
+    { label: "Dashboard", path: "/dashboard" },
+    { label: "Submit Case", path: "/submit-case" },
+    { label: "My Cases", path: "/cases" },
+    { label: "Support", path: "/support" },
+    { label: "FAQ", path: "/faq" },
+    { label: "Logout", path: "/logout", onClick: handleLogout },
+  ];
+
+  const guestNavItems = [
+    { label: "Home", path: "/" },
+    { label: "FAQ", path: "/faq" },
+    { label: "Login", path: "/login" },
+    { label: "SignUp", path: "/signup" },
+  ];
+
+  const navItems = isAuthenticated() ? authNavItems : guestNavItems;
+
+  const renderButton = (item) => (
+    <button
+      key={item.label}
+      onClick={() => {
+        item.onClick ? item.onClick() : handleNavigate(item.path);
+      }}
+      className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-blue-600 transition w-full text-left md:w-auto md:text-center"
+    >
+      {item.label}
+    </button>
+  );
 
   return (
     <nav className="bg-transparent backdrop-blur-md text-white p-4 flex justify-between items-center border-black bg-black/70 border-2 shadow-md relative z-50">
@@ -39,18 +63,18 @@ const Navbar = () => {
       </div>
 
       {/* Desktop Menu */}
-      <ul className="hidden md:flex space-x-6">
-        {navItems.map((item, index) => (
-          <li key={index}>
-            <button
-              onClick={() => handleNavigate(item.path)}
-              className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-blue-600 transition"
-            >
-              {item.label}
-            </button>
-          </li>
-        ))}
-      </ul>
+      <div className="hidden md:flex items-center space-x-4">
+        <ul className="flex space-x-4">
+          {navItems.map((item) => (
+            <li key={item.label}>{renderButton(item)}</li>
+          ))}
+        </ul>
+        {isAuthenticated() && (
+          <div className="ml-4">
+            <NotificationBell />
+          </div>
+        )}
+      </div>
 
       {/* Mobile Menu Button */}
       <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
@@ -60,17 +84,15 @@ const Navbar = () => {
       {/* Mobile Dropdown */}
       {isOpen && (
         <div className="absolute top-16 right-4 w-48 bg-gray-800 text-white shadow-lg rounded-lg md:hidden">
-          <ul className="flex flex-col">
-            {navItems.map((item, index) => (
-              <li key={index}>
-                <button
-                  onClick={() => handleNavigate(item.path)}
-                  className="w-full px-4 py-2 hover:bg-blue-600 transition text-left"
-                >
-                  {item.label}
-                </button>
-              </li>
+          <ul className="flex flex-col space-y-2 px-2 py-2">
+            {navItems.map((item) => (
+              <li key={item.label}>{renderButton(item)}</li>
             ))}
+            {isAuthenticated() && (
+              <li className="flex justify-center">
+                <NotificationBell />
+              </li>
+            )}
           </ul>
         </div>
       )}

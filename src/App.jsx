@@ -12,6 +12,8 @@ import NotFound from "./pages/NotFound"; // Import the new NotFound component
 import Dashboard from "./pages/dashboard";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Notifications from "./pages/Notifications";
+import Cases from "./pages/Cases";
 function App() {
   return (
     <Routes>
@@ -27,7 +29,8 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
-      {/* Add more routes as needed */}
+      <Route path="/notifications" element={<Notifications />} />
+      <Route path="/cases" element={<Cases />} />
       <Route path="*" element={<NotFound />} /> {/* Use NotFound for 404 */}
     </Routes>
   );
