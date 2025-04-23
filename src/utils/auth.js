@@ -46,7 +46,7 @@ export const authenticatedFetch = async (url, options = {}) => {
  * @returns {boolean} - True if authenticated
  */
 export const isAuthenticated = () => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('access');
   return !!token;
 };
 
@@ -63,7 +63,7 @@ export const getCurrentUserId = () => {
  * Logout the current user
  */
 export const logout = () => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('userId');
+  localStorage.removeItem('access');
+  localStorage.removeItem('refresh');
   window.location.href = '/login';
 };

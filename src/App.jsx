@@ -14,7 +14,9 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Notifications from "./pages/Notifications";
 import Cases from "./pages/Cases";
-import MessageList from "./pages/MessageList";
+import MessageList from "./pages/MessageList"; // optional
+import MessageDashboard from "./components/MessageDashboard"; // optional
+import MessageContainer from "./components/MessageContainer"; // optional
 function App() {
   return (
     <Routes>
@@ -33,8 +35,11 @@ function App() {
       <Route path="/notifications" element={<Notifications />} />
       <Route path="/cases" element={<Cases />} />
       <Route path="*" element={<NotFound />} /> {/* Use NotFound for 404 */}
-      <Route path="/messages" element={<MessageList />} /> {/* New route for messages */}
-      <Route path="support" element={<MessageList/>}/>
+      <Route path="/messages" element={<MessageDashboard />} /> {/* optional */}
+      <Route path="/support" element={<MessageDashboard />} /> {/* optional */}
+      <Route path="/cases/:caseId" element={<MessageContainer />} /> {/* optional */}
+      <Route path="/cases/:caseId/messages" element={<MessageContainer />} /> {/* optional */}
+      
       {/* Add more routes as needed */}
     </Routes>
   );
