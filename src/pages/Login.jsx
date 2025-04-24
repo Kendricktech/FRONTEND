@@ -24,6 +24,7 @@ export default function Login() {
         console.log("Login successful", data);
         localStorage.setItem("access", data.access);
         localStorage.setItem("refresh", data.refresh);
+        localStorage.setItem('userId', data.userId);
         setMessage("Logged in successfully. Redirecting to Dashboard");
         setTimeout(()=>{
           window.location.href='/dashboard'
