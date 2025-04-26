@@ -3,7 +3,7 @@
 /**
  * Make an authenticated API request with JWT token
  * @param {string} url - The URL to fetch
- * @param {Object} options - Fetch options
+ * @param {Object} options - Fetch options:condition ? true : false
  * @returns {Promise<Response>} - Fetch response
  */
 export const authenticatedFetch = async (url, options = {}) => {
@@ -32,9 +32,11 @@ export const authenticatedFetch = async (url, options = {}) => {
   
   // If token is expired, redirect to login
   if (response.status === 401) {
-    localStorage.removeItem('token');
+    localStorage.removeItem('access');
     localStorage.removeItem('userId');
-    window.location.href = '/login';
+    localStorage.removeItem('refresh')
+    //window.location.href = '/login';
+    console.log(response)
     return null;
   }
   
@@ -42,6 +44,7 @@ export const authenticatedFetch = async (url, options = {}) => {
 };
 
 /**
+ * 
  * Check if the user is authenticated
  * @returns {boolean} - True if authenticated
  */
