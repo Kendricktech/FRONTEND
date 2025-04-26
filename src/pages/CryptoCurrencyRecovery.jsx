@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import authenticatedFetch from '../utils/auth.js';
+import API_BASE_URL from '../utils/../utils/Setup.js';
 import Navbar from "@components/navbar";
 
 function CryptoLossReport() {
@@ -34,146 +36,50 @@ function CryptoLossReport() {
 
   // Submit handler
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const submission = new FormData();
-
-      // Append all fields to FormData
-      Object.entries(formData).forEach(([key, value]) => {
-        if (key === "evidenceFiles") {
-          Array.from(value).forEach((file) => {
-            submission.append("evidenceFiles", file);
-          });
-        } else {
-          submission.append(key, value);
-        }
-      });
-
-      const res = await fetch("https://your-api.com/api/crypto-loss-report", {
-        method: "POST",
-        body: submission,
-      });
-
-      if (res.ok) {
-        alert("Report submitted successfully!");
+  e.preventDefault();
+  
+  try {
+    const submission = new FormData();
+    
+    // Append all fields to FormData
+    Object.entries(formData).forEach(([key, value]) => {
+      if (key === "evidenceFiles") {
+        Array.from(value).forEach((file) => {
+          submission.append("evidenceFiles", file);
+        });
       } else {
-        alert("Failed to submit report.");
+        submission.append(key, value);
       }
-    } catch (error) {
-      console.error("Submission error:", error);
-      alert("An error occurred while submitting.");
+    });
+    
+    // Corrected authenticatedFetch call
+    const response = await authenticatedFetch(
+      `${API_BASE_URL}/cases/crypto-loss`,
+      {
+        method: "POST",
+        body: submission
+        // Don't set Content-Type header - FormData sets it automatically
+      }
+    );
+    
+    if (!response) {
+      // Handle 401 unauthorized case
+      return;
     }
-  };
-
-  return (
-    <>
-      <Navbar />
-      <div className="flex justify-center items-center min-h-screen bg-black/10 backdrop-blur-sm p-6">
-        <div className="bg-white/5 text-white border border-white/10 p-8 rounded-2xl shadow-xl w-full max-w-3xl">
-          <h2 className="text-3xl font-bold text-center mb-8">
-            Cryptocurrency Loss Report
-          </h2>
-          <form className="space-y-5" onSubmit={handleSubmit}>
-            {/* Text Inputs */}
-            {[
-              { label: "Full Name", name: "fullName", type: "text", required: true },
-              { label: "Email Address", name: "email", type: "email", required: true },
-              { label: "Phone Number", name: "phone", type: "tel", required: true },
-              { label: "Amount Lost", name: "amountLost", type: "number", required: true },
-              { label: "Equivalent USDT Value", name: "usdtValue", type: "number", required: true },
-              { label: "Transaction ID (TXID)", name: "txid", type: "text", required: true },
-              { label: "Sending Wallet Address", name: "senderWallet", type: "text", required: true },
-              { label: "Receiving Wallet Address", name: "receiverWallet", type: "text", required: true },
-              { label: "Platform Used", name: "platformUsed", type: "text" },
-              { label: "Blockchain Transaction Hash", name: "blockchainHash", type: "text" },
-              { label: "Payment Method Used", name: "paymentMethod", type: "text" },
-              { label: "Exchange Account Information", name: "exchangeInfo", type: "text" },
-              { label: "Wallet Backup/Private Key (If Compromised)", name: "walletBackup", type: "text" },
-            ].map(({ label, name, type, required }) => (
-              <div key={name}>
-                <label className="block text-white mb-1">{label}</label>
-                <input
-                  type={type}
-                  name={name}
-                  required={required}
-                  value={formData[name]}
-                  onChange={handleChange}
-                  className="w-full p-3 bg-white/10 border border-white/20 text-white placeholder-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-            ))}
-
-            {/* Cryptocurrency Type Dropdown */}
-            <div>
-              <label className="block text-white mb-1">Cryptocurrency Type</label>
-              <select
-                name="cryptoType"
-                required
-                value={formData.cryptoType}
-                onChange={handleChange}
-                className="w-full p-3 bg-white/10 border border-white/20 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                {["Bitcoin", "Ethereum", "USDT", "BNB", "Solana", "Other"].map((crypto) => (
-                  <option key={crypto} value={crypto}>
-                    {crypto}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Date & Time */}
-            <div>
-              <label className="block text-white mb-1">Date & Time of Transaction</label>
-              <input
-                type="datetime-local"
-                name="transactionDateTime"
-                value={formData.transactionDateTime}
-                onChange={handleChange}
-                required
-                className="w-full p-3 bg-white/10 border border-white/20 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
-            {/* Description Textarea */}
-            <div>
-              <label className="block text-white mb-1">How the Loss Happened</label>
-              <textarea
-                name="lossDescription"
-                rows="4"
-                value={formData.lossDescription}
-                onChange={handleChange}
-                required
-                className="w-full p-3 bg-white/10 border border-white/20 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              ></textarea>
-            </div>
-
-            {/* File Upload */}
-            <div>
-              <label className="block text-white mb-1">Evidence of Fraud</label>
-              <input
-                type="file"
-                name="evidenceFiles"
-                multiple
-                onChange={handleChange}
-                className="w-full text-white p-3 bg-white/10 border border-white/20 rounded-lg cursor-pointer"
-              />
-            </div>
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl shadow-md transition-all duration-300"
-            >
-              Submit Report
-            </button>
-          </form>
-        </div>
-      </div>
-    </>
-  );
-}
-
+    
+    if (response.ok) {
+      alert("Report submitted successfully!");
+      // Optional: Reset form after successful submission
+      
+    } else {
+      const errorData = await response.json();
+      alert(`Failed to submit report: ${errorData.message || response.statusText}`);
+    }
+  } catch (error) {
+    console.error("Submission error:", error);
+    alert("An error occurred while submitting.");
+  }
+};
 export default CryptoLossReport;
 
 
