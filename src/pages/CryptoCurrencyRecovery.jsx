@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "@components/navbar";
-
+import API_BASE_URL from '../utils/Setup.js';
 function CryptoLossReport() {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -50,7 +50,8 @@ function CryptoLossReport() {
         }
       });
 
-      const res = await fetch("https://your-api.com/api/crypto-loss-report", {
+      const res = await fetch(`$(API_BASE_URL
+      )/cases/crypto-loss`, {
         method: "POST",
         body: submission,
       });
