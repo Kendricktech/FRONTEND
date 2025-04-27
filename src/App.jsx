@@ -24,7 +24,7 @@ function App() {
       <Route path="/start-recovery" element={<RecoveryOptions />} /> {/* ✅ add route */}
       <Route path="/socials" element={<SocialMediaRecoveryPage />} />
       <Route path="/money-recovery" element={<MoneyRecoveryForm />} />
-      <Route path="/crypto-recovery" element={<CryptoLossReport />} />
+      /*<Route path="/crypto-recovery" element={<CryptoLossReport />} />*/
       <Route path="/articles" element={<ArticlesPage />} />
       <Route path="/contact" element={<ContactSection />} />
       <Route path="/about" element={<AboutSection />} />
