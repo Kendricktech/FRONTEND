@@ -1,5 +1,4 @@
-// - Request type: `POST`
-// - Headers: `Content-Type: application/json` (unless file upload is involved — then use `FormData`)import React, { useState } from "react";
+import React, { useState } from "react";
 import Navbar from "@components/navbar";
 import { API_BASE_URL, authenticatedFetch } from '../utils/Setup.js';
 
