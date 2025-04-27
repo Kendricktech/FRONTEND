@@ -3,6 +3,7 @@ import Navbar from "@components/navbar";
 import { API_BASE_URL, authenticatedFetch } from '../utils/Setup.js';
 
 function CryptoLossReport() {
+  console.log('hello') 
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
