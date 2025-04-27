@@ -14,8 +14,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("access");
+    console.log('accces',token)
     if (!token) {
-      navigate("/login");
+      //navigate("/login");
+      alert('token missing in dashboard');
       return;
     }
 
